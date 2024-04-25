@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autenticando</title>
+</head>
+<body>
+  <h1>Autenticando...</h1>
+  <input type="hidden" name="token" id="token" value="<%= token %>">
+  <script>
+    const token = document.querySelector('#token');
+    localStorage.headers = `authorization: Bearer ${token.value}`;
+    console.log(localStorage.headers);
+  </script>
+</body>
+</html>

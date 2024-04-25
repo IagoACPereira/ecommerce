@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= produto.nome %></title>
+</head>
+<body>
+  <h1><%= produto.nome %></h1>
+  <img height="400" src="<%= produto.imagem %>" alt="imagem do livro">
+  <p><strong>Descrição:</strong><br> <%= produto.descricao %></p>
+  <p><strong>Preço:</strong> R$ <%= produto.preco %></p>
+  <button>Comprar Agora</button>
+  <button>Mandar para o carrinho</button>
+  <hr>
+</body>
+</html>
