@@ -5,6 +5,11 @@ const sequelize = new Sequelize('ecommerce', 'postgres', 'postgres', {
   dialect: 'postgres',
 });
 
+// const sequelize = new Sequelize({
+//   dialect: 'sqlite',
+//   storage: `${__dirname}/ecommerce.sqlite`,
+// });
+
 function conexaoDb() {
   try {
     sequelize.authenticate();
