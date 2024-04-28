@@ -2,6 +2,7 @@ const express = require('express');
 const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRouter = require('./routes/usuarioRoutes');
 const authRouter = require('./routes/authRoutes');
+const carrinhoRouter = require('./routes/carrinhoRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app
     express.static(`${__dirname}/public/`),
   )
   .use(
+    carrinhoRouter,
     produtoRoutes,
     usuarioRouter,
     authRouter,

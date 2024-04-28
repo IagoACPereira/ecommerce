@@ -1,14 +1,14 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('ecommerce', 'postgres', 'postgres', {
-  host: 'localhost',
-  dialect: 'postgres',
-});
-
-// const sequelize = new Sequelize({
-//   dialect: 'sqlite',
-//   storage: `${__dirname}/ecommerce.sqlite`,
+// const sequelize = new Sequelize('ecommerce', 'postgres', 'postgres', {
+//   host: 'localhost',
+//   dialect: 'postgres',
 // });
+
+const sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: `${__dirname}/ecommerce.sqlite`,
+});
 
 function conexaoDb() {
   try {
