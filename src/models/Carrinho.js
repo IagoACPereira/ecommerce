@@ -1,21 +1,14 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../database/config');
+const sequelize = require('../config/conexaoDb');
 const Produto = require('./Produto');
+const Usuario = require('./Usuario');
 
-const Carrinho = sequelize.define('carrinhos', {
-  // usuarioId: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
-  // produtoId: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
-}, { timestamps: false });
+const Carrinho = sequelize.define('carrinhos', {}, { timestamps: false });
 
-Carrinho.hasMany(Produto);
-Produto.belongsTo(Carrinho);
+Produto.hasMany(Carrinho);
+Carrinho.belongsTo(Produto);
+Usuario.hasMany(Carrinho);
+Carrinho.belongsTo(Usuario);
 
-Carrinho.sync({ force: true });
+// Carrinho.sync({ force: true });
 
 module.exports = Carrinho;

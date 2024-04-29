@@ -10,16 +10,12 @@ const sequelize = new Sequelize({
   storage: `${__dirname}/ecommerce.sqlite`,
 });
 
-function conexaoDb() {
-  try {
-    sequelize.authenticate();
-    // eslint-disable-next-line no-console
-    console.log('A conexão foi estabelecida com sucesso.');
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log('Não foi possível conectar ao banco de dados.');
-  }
+async function conexaoDb() {
+  await sequelize.authenticate();
+  // eslint-disable-next-line no-console
+  console.log('A conexão foi estabelecida com sucesso.');
 }
+
 conexaoDb();
 
 module.exports = sequelize;

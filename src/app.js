@@ -1,15 +1,13 @@
 const express = require('express');
+const authRouter = require('./routes/authRoutes');
 const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRouter = require('./routes/usuarioRoutes');
-const authRouter = require('./routes/authRoutes');
 const carrinhoRouter = require('./routes/carrinhoRoutes');
 
 const app = express();
 
-app.get('/', (req, res) => res.json('E-Commerce do Ramon'));
-
-app.set('view engine', 'ejs');
-app.set('views', `${__dirname}/views`);
+// app.set('view engine', 'ejs');
+// app.set('views', `${__dirname}/views`);
 
 app
   .use(
@@ -20,10 +18,12 @@ app
     express.static(`${__dirname}/public/`),
   )
   .use(
-    carrinhoRouter,
+    authRouter,
     produtoRoutes,
     usuarioRouter,
-    authRouter,
+    carrinhoRouter,
   );
+
+app.get('/', (req, res) => res.json('E-Commerce do Ramon'));
 
 module.exports = app;
