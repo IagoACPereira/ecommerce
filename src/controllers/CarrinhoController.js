@@ -24,73 +24,61 @@ class CarrinhoController {
     }
   }
 
-  static async exibirTodos(req, res) {
+  static async exibir(req, res) {
+    const queries = req.query;
     try {
-      const carrinhos = await Carrinho.findAndCountAll({
+      const itensCarrinho = await Carrinho.findAndCountAll({
+        where: queries,
         include: [
           {
             model: Produto,
           },
           {
             model: Usuario,
+            attributes: ['id', 'nome', 'email', 'admin'],
           },
         ],
       });
-      res.status(200).json({
-        mensagem: 'Em testes',
-        carrinhos,
-        status: 200,
-      });
-    } catch (error) {
-      res.status(500).json({
-        mensagem: 'Ocorreu um erro interno no servidor',
-        erro: error.message,
-        status: 500,
-      });
-    }
-  }
 
-  static async exibirUm(req, res) {
-    try {
-      res.status(200).json({
-        mensagem: 'Em testes',
-        status: 200,
-      });
-    } catch (error) {
-      res.status(500).json({
-        mensagem: 'Ocorreu um erro interno no servidor',
-        erro: error.message,
-        status: 500,
-      });
-    }
-  }
+      if (!itensCarrinho.count) {
+        throw new Error('Não há intens no carrinho');
+      }
 
-  static async atualizar(req, res) {
-    try {
-      res.status(200).json({
-        mensagem: 'Em testes',
-        status: 200,
-      });
+      res.status(200).json(itensCarrinho);
     } catch (error) {
-      res.status(500).json({
-        mensagem: 'Ocorreu um erro interno no servidor',
-        erro: error.message,
-        status: 500,
+      res.status(400).json({
+        mensagem: error.message,
+        status: 400,
       });
     }
   }
 
   static async deletar(req, res) {
+    const { usuarioId, produtoId } = req.query;
     try {
+      if (!usuarioId) {
+        throw new Error('O ID do usuário é obrigatório');
+      }
+
+      if (!produtoId) {
+        throw new Error('O ID do produto é obrigatório');
+      }
+
+      await Carrinho.destroy({
+        where: {
+          usuarioId,
+          produtoId,
+        },
+      });
+
       res.status(200).json({
         mensagem: 'Em testes',
         status: 200,
       });
     } catch (error) {
-      res.status(500).json({
-        mensagem: 'Ocorreu um erro interno no servidor',
-        erro: error.message,
-        status: 500,
+      res.status(400).json({
+        mensagem: error.message,
+        status: 400,
       });
     }
   }
