@@ -47,24 +47,16 @@ class ProdutoController {
   static async exibirTodos(req, res) {
     try {
       const todosProdutos = await Produto.findAndCountAll();
-      if (todosProdutos.count === 0) {
-        throw new Error('Não existem produtos cadastrado!');
+      if (!todosProdutos.count) {
+        throw new Error('Não existem produtos cadastrado');
       }
       res.status(200).json(todosProdutos);
       // res.render('produtos/produtos.ejs', { todosProdutos });
     } catch (error) {
-      if (error.message === 'Não existem usuários cadastrado!') {
-        res.status(400).json({
-          mensagem: error.message,
-          status: 400,
-        });
-      } else {
-        res.status(500).json({
-          mensagem: 'Ocorreu um erro interno no servidor!',
-          erro: error.message,
-          status: 500,
-        });
-      }
+      res.status(400).json({
+        mensagem: error.message,
+        status: 400,
+      });
     }
   }
 

@@ -20,7 +20,7 @@ class AuthController {
         admin: usuario.admin,
       }, process.env.SEGREDO, {
         algorithm: 'HS512',
-        expiresIn: 60,
+        expiresIn: 60 * 60,
       });
       res.status(200).json({
         mensagem: 'Usuário autenticado com sucesso.',

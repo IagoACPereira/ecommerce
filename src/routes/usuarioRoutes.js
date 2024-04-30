@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { body } = require('express-validator');
 const UsuarioController = require('../controllers/UsuarioController');
 const validarToken = require('../middlewares/validarToken');
+const validarPermissoes = require('../middlewares/validarPermissoes');
 
 const usuarioRouter = Router();
 
@@ -15,7 +16,7 @@ usuarioRouter
     body('admin').notEmpty().withMessage('Campo "Admin" é obrigatório.'),
     body('admin').isInt().withMessage('Campo "Admin" precisa ser um número inteiro.'),
   ], UsuarioController.adicionar)
-  .get('/usuarios/', validarToken, UsuarioController.exibirTodos)
+  .get('/usuarios/', validarToken, validarPermissoes('escrita'), UsuarioController.exibirTodos)
   .get('/usuarios/:id', validarToken, UsuarioController.exibirUm)
   .put('/usuarios/:id', validarToken, [
     body('nome').notEmpty().withMessage('Campo "Nome" é obrigatório.'),

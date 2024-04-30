@@ -45,7 +45,9 @@ class UsuarioController {
 
   static async exibirTodos(req, res) {
     try {
-      const usuarios = await Usuario.findAndCountAll();
+      const usuarios = await Usuario.findAndCountAll({
+        attributes: ['id', 'nome', 'email'],
+      });
       if (usuarios.count === 0) {
         throw new Error('Não existem usuários cadastrado!');
       }
@@ -69,7 +71,10 @@ class UsuarioController {
   static async exibirUm(req, res) {
     const { id } = req.params;
     try {
-      const usuario = await Usuario.findOne({ where: { id } });
+      const usuario = await Usuario.findOne({
+        where: { id },
+        attributes: ['id', 'nome', 'email'],
+      });
       if (!usuario) {
         throw new Error(`Não existe usuário com o id: ${id}`);
       }

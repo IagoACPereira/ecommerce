@@ -27,24 +27,36 @@ class CarrinhoController {
   static async exibir(req, res) {
     const queries = req.query;
     try {
-      const itensCarrinho = await Carrinho.findAndCountAll({
+      const itensCarrinho = await Carrinho.findAll({
         where: queries,
         include: [
           {
-            model: Produto,
+            model: Usuario,
+            attributes: ['id', 'nome', 'email'],
           },
           {
-            model: Usuario,
-            attributes: ['id', 'nome', 'email', 'admin'],
+            model: Produto,
           },
         ],
       });
 
-      if (!itensCarrinho.count) {
+      if (!itensCarrinho[0]) {
         throw new Error('Não há intens no carrinho');
       }
 
-      res.status(200).json(itensCarrinho);
+      const quantidade = itensCarrinho.length;
+      let valorTotal = 0;
+
+      itensCarrinho.map((item) => {
+        valorTotal += item.produto.preco;
+        return 0;
+      });
+
+      res.status(200).json({
+        quantidade,
+        valorTotal,
+        itensCarrinho,
+      });
     } catch (error) {
       res.status(400).json({
         mensagem: error.message,

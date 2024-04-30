@@ -18,9 +18,7 @@ const Produto = sequelize.define('produtos', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-}, {
-  timestamps: false,
-});
+}, { timestamps: false });
 
 // Produto.sync({ force: true });
 

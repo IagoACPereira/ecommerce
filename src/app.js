@@ -3,6 +3,7 @@ const authRouter = require('./routes/authRoutes');
 const produtoRoutes = require('./routes/produtoRoutes');
 const usuarioRouter = require('./routes/usuarioRoutes');
 const carrinhoRouter = require('./routes/carrinhoRoutes');
+const permissaoRouter = require('./routes/permissaoRoutes');
 
 const app = express();
 
@@ -19,6 +20,7 @@ app
   )
   .use(
     authRouter,
+    permissaoRouter,
     produtoRoutes,
     usuarioRouter,
     carrinhoRouter,

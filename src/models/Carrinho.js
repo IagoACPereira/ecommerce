@@ -4,10 +4,10 @@ const Usuario = require('./Usuario');
 
 const Carrinho = sequelize.define('carrinhos', {}, { timestamps: false });
 
-Produto.hasMany(Carrinho);
-Carrinho.belongsTo(Produto);
 Usuario.hasMany(Carrinho);
 Carrinho.belongsTo(Usuario);
+Produto.hasMany(Carrinho);
+Carrinho.belongsTo(Produto);
 
 // Carrinho.sync({ force: true });
 

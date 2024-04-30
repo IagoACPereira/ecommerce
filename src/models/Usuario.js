@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/conexaoDb');
+const Permissao = require('./Permissao');
 
 const Usuario = sequelize.define('usuarios', {
   nome: {
@@ -14,12 +15,15 @@ const Usuario = sequelize.define('usuarios', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  admin: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
 }, {
   timestamps: false,
+});
+
+Permissao.hasMany(Usuario, {
+  foreignKey: 'permissaoId',
+});
+Usuario.belongsTo(Permissao, {
+  foreignKey: 'permissaoId',
 });
 
 // Usuario.sync({ force: true });
