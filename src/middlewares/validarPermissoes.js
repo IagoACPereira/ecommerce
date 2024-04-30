@@ -1,7 +1,7 @@
-function validarPermissoes(perfilPermitido) {
+function validarPermissoes(perfisPermitidos) {
   return (req, res, next) => {
     try {
-      console.log(perfilPermitido);
+      console.log(perfisPermitidos);
       next();
     } catch (error) {
       res.status(401).json({

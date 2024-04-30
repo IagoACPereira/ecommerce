@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/conexaoDb');
 const Permissao = require('./Permissao');
 
-const Usuario = sequelize.define('usuarios', {
+const Usuario = sequelize.define('usuario', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -17,6 +17,7 @@ const Usuario = sequelize.define('usuarios', {
   },
 }, {
   timestamps: false,
+  freezeTableName: true,
 });
 
 Permissao.hasMany(Usuario, {

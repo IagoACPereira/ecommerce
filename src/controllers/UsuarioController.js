@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const Usuario = require('../models/Usuario');
+const Permissao = require('../models/Permissao');
 
 class UsuarioController {
   static async adicionar(req, res) {
@@ -9,7 +10,7 @@ class UsuarioController {
       nome,
       email,
       senha,
-      admin,
+      permissaoId,
     } = req.body;
     try {
       if (!erroValidaReq.isEmpty()) {
@@ -19,7 +20,7 @@ class UsuarioController {
         nome,
         email,
         senha: await bcrypt.hash(senha, 10),
-        admin,
+        permissaoId,
       });
       res.status(200).json({
         mensagem: `Usuário ${novoUsuario.nome} cadastrado com sucesso.`,
@@ -47,6 +48,9 @@ class UsuarioController {
     try {
       const usuarios = await Usuario.findAndCountAll({
         attributes: ['id', 'nome', 'email'],
+        include: {
+          model: Permissao,
+        },
       });
       if (usuarios.count === 0) {
         throw new Error('Não existem usuários cadastrado!');
@@ -73,7 +77,7 @@ class UsuarioController {
     try {
       const usuario = await Usuario.findOne({
         where: { id },
-        attributes: ['id', 'nome', 'email'],
+        attributes: ['id', 'nome', 'email', 'permissaoId'],
       });
       if (!usuario) {
         throw new Error(`Não existe usuário com o id: ${id}`);
@@ -102,7 +106,7 @@ class UsuarioController {
       nome,
       email,
       senha,
-      admin,
+      permissaoId,
     } = req.body;
     try {
       const usuario = await Usuario.findOne({ where: { id } });
@@ -116,7 +120,7 @@ class UsuarioController {
         nome,
         email,
         senha: await bcrypt.hash(senha, 10),
-        admin,
+        permissaoId,
       }, { where: { id } });
       res.status(200).json({
         mensagem: 'Usuário atualizado com sucesso.',

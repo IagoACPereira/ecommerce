@@ -2,10 +2,11 @@ const Permissao = require('../models/Permissao');
 
 class PermissaoController {
   static async adicionar(req, res) {
-    const { perfil } = req.body;
+    const { perfil, descricao } = req.body;
     try {
       const novaPermissao = await Permissao.create({
         perfil,
+        descricao,
       });
       res.status(201).json({
         mensagem: 'Permissão adicionada com sucesso',
@@ -49,9 +50,9 @@ class PermissaoController {
 
   static async atualizar(req, res) {
     const { id } = req.params;
-    const { perfil } = req.body;
+    const { perfil, descricao } = req.body;
     try {
-      await Permissao.update({ perfil }, {
+      await Permissao.update({ perfil, descricao }, {
         where: { id },
       });
       res.status(200).json({

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/conexaoDb');
 
-const Produto = sequelize.define('produtos', {
+const Produto = sequelize.define('produto', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -18,7 +18,10 @@ const Produto = sequelize.define('produtos', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-}, { timestamps: false });
+}, {
+  timestamps: false,
+  freezeTableName: true,
+});
 
 // Produto.sync({ force: true });
 
